@@ -4,21 +4,25 @@ import './App.css'
 
 // pages
 import LoginPage from './features/auth/pages/LoginPage'
-import RegisterPage from './features/auth/pages/RegisterPage'
+import DashboardPage from './features/dashboard/pages/DashboardPage'
+
+// layout
+import MainLayout from './widgets/layout/MainLayout'
 
 function App() {
 
   return (
     <Router>
-
-
       <Routes>
-        <Route path="/" >
-          <Route index element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
-      </Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<LoginPage />} />
 
+        {/* Protected/Internal Routes */}
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
+
+      </Routes>
     </Router>
   )
 }

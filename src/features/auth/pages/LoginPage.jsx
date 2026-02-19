@@ -74,14 +74,6 @@ function LoginPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                             </svg>
                         </button>
-                        <div className="mt-6 text-center">
-                            <p className="text-slate-500 text-sm">
-                                ¿No tienes cuenta?{' '}
-                                <Link to="/register" className="text-cyan-500 hover:text-cyan-400 font-semibold transition-colors decoration-dotted underline-offset-4">
-                                    Registrar
-                                </Link>
-                            </p>
-                        </div>
                     </div>
                 </div>
 
