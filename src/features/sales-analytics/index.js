@@ -1,0 +1,1 @@
+// Exportar solo los graficos terminados
