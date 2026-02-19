@@ -18,7 +18,7 @@ import {
     FileText,
     Fingerprint
 } from 'lucide-react';
-import { VegaLite } from 'react-vega';
+import { VegaEmbed } from 'react-vega';
 
 const StatCard = ({ label, value, subtext, trend, icon: Icon, valueColor = 'text-white' }) => (
     <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 p-5 rounded-xl flex flex-col justify-between relative group hover:border-slate-700 transition-all">
@@ -67,7 +67,13 @@ const agentsSummarySpec = {
     height: 160,
     background: 'transparent',
     padding: 0,
-    data: { name: 'table' },
+    data: {
+        values: [
+            { category: 'Active', value: 12 },
+            { category: 'Disc.', value: 3 },
+            { category: 'Pending', value: 1 }
+        ]
+    },
     mark: { type: 'arc', innerRadius: 55, outerRadius: 75, cornerRadius: 4, stroke: '#0f172a', strokeWidth: 1 },
     encoding: {
         theta: { field: 'value', type: 'quantitative', stack: true },
@@ -96,7 +102,12 @@ const alertsHistorySpec = {
     height: 180,
     background: 'transparent',
     padding: { top: 10, right: 10, bottom: 20, left: 10 },
-    data: { name: 'table' },
+    data: {
+        values: [40, 45, 42, 50, 60, 55, 45, 40, 42, 48, 55, 65, 70, 68, 60, 55, 45, 42, 40, 38, 42, 45, 50, 48].map((h, i) => ({
+            hour: i === 23 ? 'Now' : `${String(i).padStart(2, '0')}:00`,
+            alerts: h
+        }))
+    },
     mark: {
         type: 'bar',
         cornerRadiusTop: 4,
@@ -139,21 +150,6 @@ const alertsHistorySpec = {
 };
 
 function DashboardPage() {
-    const agentsData = {
-        table: [
-            { category: 'Active', value: 12 },
-            { category: 'Disc.', value: 3 },
-            { category: 'Pending', value: 1 }
-        ]
-    };
-
-    const alertsDataArray = [40, 45, 42, 50, 60, 55, 45, 40, 42, 48, 55, 65, 70, 68, 60, 55, 45, 42, 40, 38, 42, 45, 50, 48];
-    const alertsData = {
-        table: alertsDataArray.map((h, i) => ({
-            hour: i === 23 ? 'Now' : `${String(i).padStart(2, '0')}:00`,
-            alerts: h
-        }))
-    };
 
     return (
         <div className="animate-in fade-in duration-700 space-y-8 pb-12">
@@ -207,7 +203,7 @@ function DashboardPage() {
                     <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8">Agents Summary</h3>
                     <div className="flex flex-col items-center">
                         <div className="relative w-full h-44 flex items-center justify-center">
-                            <VegaLite spec={agentsSummarySpec} data={agentsData} actions={false} className="w-full flex justify-center translate-y-2" />
+                            <VegaEmbed spec={agentsSummarySpec} options={{ actions: false, background: 'transparent' }} className="w-full flex justify-center translate-y-2" />
                             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                 <div className="text-center">
                                     <span className="text-2xl font-bold text-white">16</span>
@@ -240,7 +236,7 @@ function DashboardPage() {
                     </div>
 
                     <div className="w-full h-52">
-                        <VegaLite spec={alertsHistorySpec} data={alertsData} actions={false} className="w-full h-full" />
+                        <VegaEmbed spec={alertsHistorySpec} options={{ actions: false, background: 'transparent' }} className="w-full h-full" />
                     </div>
                 </div>
             </div>
